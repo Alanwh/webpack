@@ -1,0 +1,39 @@
+Arguments: 
+  D:\software\node.exe D:\Users\wenjunhe\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js install css-loader
+
+PATH: 
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files\Java\jdk1.7.0_60\bin;C:\Program Files\Java\jdk1.7.0_60\jre\bin;C:\JAVA\apache-maven-3.3.9\bin;D:\software\;D:\software\Git\cmd;C:\Program Files\TortoiseGit\bin;D:\Users\wenjunhe\AppData\Roaming\npm;D:\software\Microsoft VS Code\bin;D:\software\Fiddler
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.11.1
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "webpack",
+    "version": "1.0.0",
+    "description": "webpack learning",
+    "main": "index.js",
+    "author": "hwjun",
+    "license": "MIT"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: `install` has been replaced with `add` to add new dependencies. Run "yarn add css-loader" instead.
+      at new MessageError (D:\Users\wenjunhe\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at Object.<anonymous> (D:\Users\wenjunhe\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:21987:13)
+      at Generator.next (<anonymous>)
+      at step (D:\Users\wenjunhe\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at D:\Users\wenjunhe\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:109:13
+      at <anonymous>
