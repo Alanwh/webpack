@@ -2,9 +2,10 @@ div{
     width:600px;
     height: 200px;
     margin: 0 auto;
+    color: #fff;
     background: #369;
     font-size: 20px;
-    text-align: center;
     display: flex;
     align-items: center;
+    justify-content: center;
 }

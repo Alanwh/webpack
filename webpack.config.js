@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');//清楚每次打包多余js
 
 config = {
@@ -13,13 +14,38 @@ config = {
         rules: [
             {
                 test: /\.css$/,
-                use: 'css-loader'
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    }
+                    
+                ]
+            },
+            {
+                test: /\.(sass|scss)$/,
+                use:[
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    }
+                ]
             }
         ]
     },
     plugins: [
         // new webpack.optimize.UglifyJsPlugin(),
-        // new HtmlWebpackPlugin({template: './src/index.html'})
+        new HtmlWebpackPlugin({
+            title: 'webpack',
+            template: './index.html'
+        }),
         new CleanWebpackPlugin(['dist/'])
     ]
 }
