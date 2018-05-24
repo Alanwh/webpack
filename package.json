@@ -6,7 +6,8 @@
   "author": "hwjun",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "build": " webpack"
   },
   "dependencies": {
     "clean-webpack-plugin": "^0.1.19",
