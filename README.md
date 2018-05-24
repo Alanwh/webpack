@@ -1,12 +1,12 @@
 ### 入口文件
-*单入口语法
+* 单入口语法
 ```
 entry: {
     main: './src/index.js',
 }
 
 ```
-*多入口语法
+* 多入口语法
 ```
 entry: {
     pageOne: './src/pageOne/index.js',
@@ -14,6 +14,7 @@ entry: {
     pageThree: './src/pageThree/index.js
 }
 ```
+
 
 ### 出口文件
 ```
@@ -30,6 +31,7 @@ output: {
 }
 ```
 
+
 ### 模式
 语法
 ```
@@ -39,6 +41,7 @@ mode: production|development
 ```
 webpack --mode=production
 ```
+
 
 ### loader
 * 在配置文件中设置
@@ -70,6 +73,7 @@ import Style from 'style-loader|css-loader?modules!./src/index.css';
 ```
 webpack --module-bind jade-loader --module-bind 'css=style-loader!css-loader'
 ```
+
 
 ### 常用插件
 * [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) 清楚每次运行时产生多余的js
