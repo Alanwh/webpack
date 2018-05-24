@@ -17,13 +17,14 @@ entry: {
 
 
 ### 出口文件
+* 语法
 ```
 output: {
     filename: [name]-[hash:5].js,
     path: path.resolve(__dirname,'dist/')
 }
 ```
-使用cdn和hash
+* 使用cdn和hash
 ```
 output: {
     path: '/src/images/[hash]',
@@ -33,11 +34,11 @@ output: {
 
 
 ### 模式
-语法
+* 语法
 ```
 mode: production|development
 ```
- shell 命令中设置模式
+* shell 命令中设置模式
 ```
 webpack --mode=production
 ```
