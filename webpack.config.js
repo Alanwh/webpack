@@ -26,12 +26,12 @@ config = {
                                 minimize: true
                             }
                         }, 
-                        // {
-                        //     loader: 'postcss-loader',
-                        //     options: {
-                        //         sourceMap: true
-                        //     }
-                        // },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
                         {
                             loader: 'sass-loader',
                             options: {
@@ -47,9 +47,10 @@ config = {
                   {
                     loader: 'url-loader',
                     options: {
-                      limit: 8192,
-                      publicPath: '../images/',
-                      outputPath: 'images/'
+                        name: '[name].[ext]',
+                        limit: 8192,
+                        publicPath: '../images',
+                        outputPath: 'images/'
                     }
                   }
                 ]
@@ -57,10 +58,10 @@ config = {
             {
                 test: /\.html$/,
                 use: [ {
-                  loader: 'html-loader',
-                  options: {
-                    minimize: true
-                  }
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
                 }],
             }
         ]
