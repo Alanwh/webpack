@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');//清楚每次打包多余js
 
 config = {
@@ -61,13 +62,18 @@ config = {
         ]
     },
     plugins: [
-        // new webpack.optimize.UglifyJsPlugin(),
         new HtmlWebpackPlugin({
             title: 'webpack',
             template: './index.html'
         }),
-        new CleanWebpackPlugin(['dist/'])
-    ]
+        new CleanWebpackPlugin(['dist/']),
+        new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer: {
+        port:8080,
+        inline:true,
+        hot:true
+    }
 }
 
 module.exports = config;

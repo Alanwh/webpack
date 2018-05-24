@@ -78,4 +78,5 @@ webpack --module-bind jade-loader --module-bind 'css=style-loader!css-loader'
 ### 常用插件
 * [clean-webpack-plugin](https://github.com/johnagan/clean-webpack-plugin) 清除每次运行时产生多余的js
 * [html-loader](https://github.com/webpack-contrib/html-loader) 打包img标签中src路径图片
+* [open-browser-webpack-plugin](https://github.com/baldore/open-browser-webpack-plugin) 自动打开浏览器
 
