@@ -1,11 +1,12 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');//清楚每次打包多余js
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 config = {
     mode: 'development',
+    // devtool:'source-map',
     entry: './src/index.js',
     output: {
         filename: '[name]-[hash:5].js',
@@ -14,30 +15,31 @@ config = {
     module: {
         rules: [
             {
-                test: /\.css$/,
-                use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    }
-                    
-                ]
-            },
-            {
-                test: /\.(sass|scss)$/,
-                use:[
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'sass-loader'
-                    }
-                ]
+                test: /\.(sass|scss|css)$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true,
+                                minimize: true
+                            }
+                        }, 
+                        // {
+                        //     loader: 'postcss-loader',
+                        //     options: {
+                        //         sourceMap: true
+                        //     }
+                        // },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        }
+                    ]
+                })
             }, 
             {
                 test: /\.(png|jpg|gif)$/,
@@ -45,7 +47,9 @@ config = {
                   {
                     loader: 'url-loader',
                     options: {
-                      limit: 8192
+                      limit: 8192,
+                      publicPath: '../images/',
+                      outputPath: 'images/'
                     }
                   }
                 ]
@@ -67,7 +71,10 @@ config = {
             template: './index.html'
         }),
         new CleanWebpackPlugin(['dist/']),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new ExtractTextPlugin({
+            filename:`./css/[name]-[hash:5].css`,
+        })
     ],
     devServer: {
         port:8080,
