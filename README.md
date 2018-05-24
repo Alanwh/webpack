@@ -28,6 +28,7 @@ output: {
     path: '/src/images/[hash]',
     publicPath: 'http://cdn.example.com/assets/[hash]'
 }
+```
 
 ### 模式
 语法
