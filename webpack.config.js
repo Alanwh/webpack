@@ -81,6 +81,20 @@ config = {
             }
         ]
     },
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+            vendor: {
+                name: 'vendor',
+                reuseExistingChunk: true,
+                chunks: chunk => ['vendor', 'application'].includes(chunk.name),
+                test: module => /[\\/]node_modules[\\/]/.test(module.context),
+                minChunks: 1,
+                minSize: 0,
+            },
+          },
+        },
+    },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'webpack',
