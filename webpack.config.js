@@ -47,21 +47,14 @@ config = {
                 test: /\.js$/,
                 use: [
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                [
-                                    '@babel/preset-env',
-                                    {
-                                        targets: {
-                                            browsers: ['>1%','last 2 versions']
-                                        }
-                                    }
-                                ]
-                            ]
-                        }
+                        loader: 'babel-loader'
                     }
-                ]
+                ],
+                exclude:path.resolve(__dirname,'node_modules')
+            },
+            { 
+                test: /\.tsx?$/, 
+                loader: "ts-loader" 
             },
             {
                 test: /\.(png|jpg|gif)$/,
