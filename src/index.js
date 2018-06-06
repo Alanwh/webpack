@@ -1,25 +1,48 @@
-import IndexCss from './css/index.css';
-import CommonCss from './css/common.scss';
+import React from 'react';
+import ReactDom from 'react-dom';
+// import Hello from 'component/Hello/Hello';
+import './css/reset.css';
 
-//es6 module
-import add from './js/add'; 
-// common.js
-const minus = require('./js/minus'); 
-// AMD
-require(['./js/muti'],function(muti){
-    console.log('muti(3,4) = ' + muti(3,4));
-});
+import {AppContainer} from 'react-hot-loader';
+import {Provider} from 'react-redux';
 
-console.log('add(3,4) = ' + add(3,4));
-console.log('minus(7,4) = ' + minus(7,4));
+import {BrowserRouter as Router} from 'react-router-dom';
 
-// 测试 babel-loader
-const NUM = 14;
-let fun = () => {};
-let arr = [1,2,3];
-let arrB = arr.map(item => item * 2);
-arr.includes(8);
-console.log(new Set(arrB));
+import store from './redux/store';
 
-// 测试 typescript
-import ts from './js/index.ts';
+// import getRouter from 'router/router';
+import App from './components/App/App';
+
+
+
+/*初始化*/
+// renderWithHotReload(getRouter());
+renderWithHotReload(App);
+
+/*热更新*/
+// if (module.hot) {
+//     module.hot.accept('router/router', () => {
+//         const getRouter = require('router/router').default;
+//         renderWithHotReload(getRouter());
+//     });
+// }
+if (module.hot) {
+    module.hot.accept('components/App/App', () => {
+        const NextApp = require('components/App/App').default;
+        renderWithHotReload(NextApp);
+    });
+}
+
+function renderWithHotReload(RootElement) {
+    ReactDom.render(
+        <AppContainer>
+            <Provider store={store}>
+                {/* {RootElement} */}
+                <Router>
+                    <RootElement/>
+                </Router>
+            </Provider>
+        </AppContainer>,
+        document.getElementById('app')
+    )
+}

@@ -1,13 +1,12 @@
 // const path = require('path');
 // const webpack = require('webpack');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // module.exports = {
-//     devtool: 'cheap-module-source-map',
+//     mode: 'development',
+//     devtool: 'inline-source-map',
+    
 //     entry: {
 //         app: [
 //             'react-hot-loader/patch',
@@ -17,9 +16,8 @@
 //     },
     
 //     output: {
-//         publicPath : '/',
 //         path: path.join(__dirname, './dist'),
-//         filename: '[name].[chunkhash].js',
+//         filename: '[name].[hash].js',
 //         chunkFilename: '[name].[chunkhash].js'
 //     },
 
@@ -69,6 +67,16 @@
 //         ]
 //     },
 
+//     devServer: {
+//         port: 8080,
+//         contentBase: path.join(__dirname, './dist'),
+//         historyApiFallback: true,
+//         host: '10.32.84.21',
+//         proxy: {
+//            // "/api": "http://localhost:3000"
+//         }
+//     },
+
 //     resolve: {
 //         alias: {
 //             pages: path.join(__dirname, 'src/pages'),
@@ -76,6 +84,7 @@
 //             router: path.join(__dirname, 'src/router'),
 //             actions: path.join(__dirname, 'src/redux/actions'),
 //             reducers: path.join(__dirname, 'src/redux/reducers')
+//             // redux: path.join(__dirname, 'src/redux')
 //         }
 //     },
 
@@ -88,82 +97,83 @@
 //             filename: 'index.html',
 //             template: path.join(__dirname, 'src/index.html')
 //         }),
-//         new UglifyJSPlugin(),
-//         new webpack.DefinePlugin({
-//             'process.env': {
-//                 'NODE_ENV': JSON.stringify('production')
-//              }
-//         }),
 //         new webpack.optimize.CommonsChunkPlugin({
 //             name: 'vendor'
-//         }),
-//         new webpack.optimize.CommonsChunkPlugin({
-//             name: 'runtime'
-//         }),
-//         new webpack.HashedModuleIdsPlugin(),
-//         new CleanWebpackPlugin(['dist/*.*'])
+//         })
 //     ]
     
 // };
 
 const merge = require('webpack-merge');
-
-const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path');
 
 const commonConfig = require('./webpack.common.config.js');
 
-const publicConfig = {
-    devtool: 'cheap-module-source-map',
+const devConfig = {
+    devtool: 'inline-source-map',
+    entry: {
+        app: [
+            "babel-polyfill",
+            'react-hot-loader/patch',
+            path.join(__dirname, 'src/index.js')
+        ]
+    },
+    output: {
+        /*这里本来应该是[chunkhash]的，但是由于[chunkhash]和react-hot-loader不兼容。只能妥协*/
+        filename: '[name].[hash].js'
+    },
     module: {
         rules: [
             {
                 test: /\.(sass|scss|css)$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true,
-                                minimize: true,
-                                modules: true,
-                                localIdentName: '[local]--[hash:base64:5]'
-                            }
-                        }, 
-                        {
-                            loader: 'postcss-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'sass-loader',
-                            options: {
-                                sourceMap: true
-                            }
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            sourceMap: true
                         }
-                    ]
-                })
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            modules: true,
+                            localIdentName: '[local]--[hash:base64:5]'
+                        }
+                    }, 
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
+                ]
             }
         ]
     },
-    plugins: [
-        new CleanWebpackPlugin(['dist/*.*']),
-        new UglifyJSPlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
-            }
-        }),
-        new ExtractTextPlugin({
-            filename: '[name].[contenthash:5].css',
-            allChunks: true
-        })
-    ]
-
+    devServer: {
+        port: 8080,
+        contentBase: path.join(__dirname, './dist'),
+        historyApiFallback: true,
+        host: '10.32.84.21',
+        proxy: {
+           "/api/*": "http://10.32.84.21:3000/$1"
+        }
+    },
 };
 
-module.exports = merge(commonConfig, publicConfig);
+module.exports = merge({
+    customizeArray(a, b, key) {
+        /*entry.app不合并，全替换*/
+        if (key === 'entry.app') {
+            return b;
+        }
+        return undefined;
+    }
+})(commonConfig, devConfig);

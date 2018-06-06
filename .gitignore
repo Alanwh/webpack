@@ -1,5 +1,4 @@
-node_modules
-*.log
-yarn.lock
-dist/
-.gitignore
+/node_modules/
+/dist
+/.idea
+/.vscode
