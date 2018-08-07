@@ -88,6 +88,8 @@ module.exports = {
         }),
         lessExtract,
         sassExtract,
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
         new webpack.ProvidePlugin({
             $:'jquery',
             R:'ramda'
@@ -100,6 +102,8 @@ module.exports = {
         //extensions: [".js", ".json"]
     },
     devServer:{//配置此静态文件服务器，可以用来预览打包后项目
+        inline:true,//打包后加入一个websocket客户端
+        hot:true,//热加载
         contentBase:path.resolve(__dirname,'dist'),//开发服务运行时的文件根目录
         host:'localhost',//主机地址
         port:9090,//端口号
